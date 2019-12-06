@@ -26,15 +26,21 @@ class FileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-//        $this->validate($request,[
-//            'form_name' => 'required|string|max:191',
-//        ]);
+        $requestData = $request['file_names'];
+        $filesData   = [];
 
-        dd($request->all());
+        for ($i = 0; $i < count($request['file_names']); $i++) {
+            $filesData[$i]['file_name'] = $requestData[$i];
+            $filesData[$i]['file']      = $this->fileUpload($request->file('images')[$i]);
+
+        }
+
         return Form::create([
             'form_name' => $request['form_name'],
+            'file'      => json_encode($filesData),
         ]);
     }
 
@@ -48,15 +54,7 @@ class FileController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = Form::findOrFail($id);
 
-        $this->validate($request,[
-            'form_name' => 'required|string|max:191',
-        ]);
-
-        $user->update($request->all());
-
-        return ['message' => 'Updated the Form'];
     }
 
     /**
@@ -68,12 +66,6 @@ class FileController extends Controller
 
     public function destroy($id)
     {
-        $user = Form::findOrFail($id);
-        // delete the form
 
-        $user->delete();
-
-        return ['message' => 'User Deleted'];
     }
-
 }

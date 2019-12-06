@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(7);
+var bind = __webpack_require__(6);
 var isBuffer = __webpack_require__(21);
 
 /*global toString:true*/
@@ -424,10 +424,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(9);
+    adapter = __webpack_require__(8);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(9);
+    adapter = __webpack_require__(8);
   }
   return adapter;
 }
@@ -502,119 +502,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3155,7 +3046,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -13526,13 +13417,13 @@ return jQuery;
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(20);
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13550,7 +13441,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -13740,7 +13631,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13751,7 +13642,7 @@ var settle = __webpack_require__(24);
 var buildURL = __webpack_require__(26);
 var parseHeaders = __webpack_require__(27);
 var isURLSameOrigin = __webpack_require__(28);
-var createError = __webpack_require__(10);
+var createError = __webpack_require__(9);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(29);
 
 module.exports = function xhrAdapter(config) {
@@ -13927,7 +13818,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13952,7 +13843,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13964,7 +13855,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13990,11 +13881,120 @@ module.exports = Cancel;
 
 
 /***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(14);
-module.exports = __webpack_require__(53);
+module.exports = __webpack_require__(50);
 
 
 /***/ }),
@@ -14058,8 +14058,7 @@ window.Fire = new Vue();
  */
 
 Vue.component('example-component', __webpack_require__(44));
-Vue.component('users', __webpack_require__(47));
-Vue.component('files', __webpack_require__(50));
+Vue.component('files', __webpack_require__(47));
 
 var app = new Vue({
   el: '#app',
@@ -14072,7 +14071,7 @@ var app = new Vue({
 
 
 window._ = __webpack_require__(16);
-window.Popper = __webpack_require__(4).default;
+window.Popper = __webpack_require__(3).default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -14081,7 +14080,7 @@ window.Popper = __webpack_require__(4).default;
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(5);
+  window.$ = window.jQuery = __webpack_require__(4);
 
   __webpack_require__(18);
   __webpack_require__(19);
@@ -14093,7 +14092,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(6);
+window.axios = __webpack_require__(5);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -31279,7 +31278,7 @@ module.exports = function(module) {
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(5), __webpack_require__(4)) :
+   true ? factory(exports, __webpack_require__(4), __webpack_require__(3)) :
   typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
   (factory((global.bootstrap = {}),global.jQuery,global.Popper));
 }(this, (function (exports,$,Popper) { 'use strict';
@@ -35239,7 +35238,7 @@ module.exports = function(module) {
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(7);
+var bind = __webpack_require__(6);
 var Axios = __webpack_require__(22);
 var defaults = __webpack_require__(2);
 
@@ -35274,9 +35273,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(12);
+axios.Cancel = __webpack_require__(11);
 axios.CancelToken = __webpack_require__(36);
-axios.isCancel = __webpack_require__(11);
+axios.isCancel = __webpack_require__(10);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -35429,7 +35428,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(10);
+var createError = __webpack_require__(9);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -35862,7 +35861,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(33);
-var isCancel = __webpack_require__(11);
+var isCancel = __webpack_require__(10);
 var defaults = __webpack_require__(2);
 var isAbsoluteURL = __webpack_require__(34);
 var combineURLs = __webpack_require__(35);
@@ -36022,7 +36021,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(12);
+var Cancel = __webpack_require__(11);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -47340,7 +47339,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(7)))
 
 /***/ }),
 /* 41 */
@@ -47425,7 +47424,7 @@ module.exports = __webpack_require__("lVK7");
 /***/ "OMN4":
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(5);
 
 /***/ }),
 
@@ -54537,7 +54536,7 @@ if (inBrowser && window.Vue) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(12)
 /* script */
 var __vue_script__ = __webpack_require__(45)
 /* template */
@@ -54656,7 +54655,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(12)
 /* script */
 var __vue_script__ = __webpack_require__(48)
 /* template */
@@ -54677,7 +54676,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Users.vue"
+Component.options.__file = "resources/assets/js/components/Files.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -54686,9 +54685,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5cacd261", Component.options)
+    hotAPI.createRecord("data-v-0c09a160", Component.options)
   } else {
-    hotAPI.reload("data-v-5cacd261", Component.options)
+    hotAPI.reload("data-v-0c09a160", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -54795,630 +54794,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            editmode: false,
-            users: {},
-            form: new Form({
-                id: '',
-                name: '',
-                // email: '',
-                // password: '',
-                // type: '',
-                // bio: '',
-                photo: 'profile.png'
-            })
-        };
-    },
-
-    methods: {
-        // getResults(page = 1) {
-        //             axios.get('api/user?page=' + page)
-        //                 .then(response => {
-        //                     console.log(response.data);
-        //                     this.users = response.data;
-        //                 });
-        //     },
-
-        updateUser: function updateUser() {
-            // this.$Progress.start();
-            // console.log('Editing data');
-            this.form.put('api/user/' + this.form.id).then(function () {
-                // success
-                $('#addNew').modal('hide');
-                toast({
-                    type: 'success',
-                    title: 'Information has been updated'
-                });
-
-                // swal(
-                //    'Updated!',
-                //    'Information has been updated.',
-                //    'success'
-                //    )
-                // this.$Progress.finish();
-                Fire.$emit('AfterCreate');
-            }).catch(function () {
-                //this.$Progress.fail();
-            });
-        },
-        editModal: function editModal(user) {
-            this.editmode = true;
-            this.form.reset();
-            $('#addNew').modal('show');
-            this.form.fill(user);
-        },
-        newModal: function newModal() {
-            this.editmode = false;
-            this.form.reset();
-            $('#addNew').modal('show');
-        },
-        deleteUser: function deleteUser(id) {
-            var _this = this;
-
-            swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then(function (result) {
-
-                // Send request to the server
-                if (result.value) {
-                    _this.form.delete('api/user/' + id).then(function () {
-                        swal('Deleted!', 'Your file has been deleted.', 'success');
-                        Fire.$emit('AfterCreate');
-                    }).catch(function () {
-                        swal("Failed!", "There was something wronge.", "warning");
-                    });
-                }
-            });
-        },
-        loadUsers: function loadUsers() {
-            var _this2 = this;
-
-            //if(this.$gate.isAdminOrAuthor()){
-            axios.get("api/user").then(function (_ref) {
-                var data = _ref.data;
-                return _this2.users = data;
-            });
-            //}
-        },
-        createUser: function createUser() {
-            /// this.$Progress.start();
-
-            this.form.post('api/user').then(function () {
-                Fire.$emit('AfterCreate');
-                $('#addNew').modal('hide');
-
-                toast({
-                    type: 'success',
-                    title: 'File Created in successfully'
-                });
-                // this.$Progress.finish();
-            }).catch(function () {});
-        }
-    },
-    created: function created() {
-        var _this3 = this;
-
-        Fire.$on('searching', function () {
-            var query = _this3.$parent.search;
-            axios.get('api/findUser?q=' + query).then(function (data) {
-                _this3.users = data.data;
-            }).catch(function () {});
-        });
-        this.loadUsers();
-        Fire.$on('AfterCreate', function () {
-            _this3.loadUsers();
-        });
-        //    setInterval(() => this.loadUsers(), 3000);
-    }
-});
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c("h3", { staticClass: "card-title" }, [_vm._v("Files Table")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-tools" }, [
-              _c(
-                "button",
-                { staticClass: "btn btn-success", on: { click: _vm.newModal } },
-                [
-                  _vm._v("Add New "),
-                  _c("i", { staticClass: "fas fa-plus fa-fw" })
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body table-responsive p-0" }, [
-            _c("table", { staticClass: "table table-hover" }, [
-              _c(
-                "tbody",
-                [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _vm._l(_vm.users.data, function(user) {
-                    return _c("tr", { key: user.id }, [
-                      _c("td", [_vm._v(_vm._s(user.id))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(user.name))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                _vm.editModal(user)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit blue" })]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                _vm.deleteUser(user.id)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-trash red" })]
-                        )
-                      ])
-                    ])
-                  })
-                ],
-                2
-              )
-            ])
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "addNew",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "addNewLabel",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "modal-dialog modal-dialog-centered",
-            attrs: { role: "document" }
-          },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h5",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: !_vm.editmode,
-                        expression: "!editmode"
-                      }
-                    ],
-                    staticClass: "modal-title",
-                    attrs: { id: "addNewLabel" }
-                  },
-                  [_vm._v("Add New")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "h5",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.editmode,
-                        expression: "editmode"
-                      }
-                    ],
-                    staticClass: "modal-title",
-                    attrs: { id: "addNewLabel" }
-                  },
-                  [_vm._v("Update File Data")]
-                ),
-                _vm._v(" "),
-                _vm._m(1)
-              ]),
-              _vm._v(" "),
-              _c(
-                "form",
-                {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      _vm.editmode ? _vm.updateUser() : _vm.createUser()
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "modal-body" }, [
-                    _c(
-                      "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("label", [_vm._v("Name")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.name,
-                              expression: "form.name"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: { "is-invalid": _vm.form.errors.has("name") },
-                          attrs: {
-                            type: "text",
-                            name: "name",
-                            placeholder: "Name"
-                          },
-                          domProps: { value: _vm.form.name },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.form, "name", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("has-error", {
-                          attrs: { form: _vm.form, field: "name" }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _vm._m(2)
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-footer" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        attrs: { type: "button", "data-dismiss": "modal" }
-                      },
-                      [_vm._v("Close")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.editmode,
-                            expression: "editmode"
-                          }
-                        ],
-                        staticClass: "btn btn-success",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Update")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: !_vm.editmode,
-                            expression: "!editmode"
-                          }
-                        ],
-                        staticClass: "btn btn-success",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Save")]
-                    )
-                  ])
-                ]
-              )
-            ])
-          ]
-        )
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", [_vm._v("ID")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Name")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Modify")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "modal",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("button", { staticClass: "btn btn-success" }, [
-        _vm._v("Add File "),
-        _c("i", { staticClass: "fas fa-plus fa-fw" })
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5cacd261", module.exports)
-  }
-}
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(51)
-/* template */
-var __vue_template__ = __webpack_require__(52)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Files.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0c09a160", Component.options)
-  } else {
-    hotAPI.reload("data-v-0c09a160", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 51 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            editmode: false,
+            editMode: false,
             forms: {},
+            files: {},
             rows: [],
-            file: '',
-            images: [],
-            image: [],
             form: new Form({
                 id: '',
                 form_name: '',
-                file_name: ''
+                file: ''
             })
         };
     },
@@ -55430,120 +54817,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         removeRow: function removeRow(index) {
             this.rows.splice(index, 1);
         },
-        viewModal: function viewModal(file) {
-            this.editmode = true;
+        viewModal: function viewModal(form) {
+            this.files = JSON.parse(form.file);
+            this.editMode = true;
             this.form.reset();
             $('#addNew').modal('show');
-            this.form.fill(file);
+            this.form.fill(form);
         },
 
-        previewImage: function previewImage(index, e) {
-            var r = new FileReader(),
-                f = e.target.files[0];
+        previewImage: function previewImage(index, event) {
+            var reader = new FileReader(),
+                previewFile = event.target.files[0];
 
-            console.log(f);
-            r.addEventListener('load', function () {
-                $('[class~="images[' + index + ']-preview"]', this.el).html('<img src="' + r.result + '" width="50" class="thumbnail img-responsive">');
+            reader.addEventListener('load', function () {
+                $('[class~="images[' + index + ']-preview"]', this.el).html('<img src="' + reader.result + '" width="50" class="thumbnail img-responsive">');
             }, false);
 
-            if (f) {
-                r.readAsDataURL(f);
+            if (previewFile) {
+                reader.readAsDataURL(previewFile);
             }
         },
-
-        // onInputChange(e) {
-        //     let files = e.target.files || e.dataTransfer.files;
-        //     if (!files.length)
-        //         return;
-        //     this.createImage(files[0]);
-        // },
-        // createImage(file) {
-        //     let reader = new FileReader();
-        //     let vm = this;
-        //     reader.onload = (e) => {
-        //         vm.image = e.target.result;
-        //     };
-        //     reader.readAsDataURL(file);
-        // },
-        // onInputChange(e) {
-        //     const files = e.target.files;
-        //     Array.from(files).forEach(file => this.addImage(file));
-        // },
-        // addImage(file) {
-        //     if (!file.type.match('image.*')) {
-        //         this.$toastr.e(`${file.name} is not an image`);
-        //         return;
-        //     }
-        //     this.files.push(file);
-        //     const img = new Image(),
-        //         reader = new FileReader();
-        //     reader.onload = (e) => this.images.push(e.target.result);
-        //     reader.readAsDataURL(file);
-        // },
         newModal: function newModal() {
-            this.editmode = false;
+            this.editMode = false;
+            this.rows = [];
+
             this.form.reset();
             $('#addNew').modal('show');
         },
         loadDatas: function loadDatas() {
             var _this = this;
 
-            axios.get("api/file").then(function (_ref) {
+            axios.get('api/file').then(function (_ref) {
                 var data = _ref.data;
                 return _this.forms = data;
             });
         },
         createData: function createData(e) {
-            // this.file = this.$refs.file.files[0];
-            // console.log(this.file);
-            var vm = this;
+            var self = this;
             var data = new FormData(e.target);
 
             $('[class~="images[]"]', this.el).each(function (i) {
-                if (i > vm.maxImages - 1) {
-                    return; // Max images reached.
+                if (i > self.maxImages - 1) {
+                    return;
                 }
 
                 data.append('images[' + i + ']', this.files[0]);
             });
-            //  console.log(this.image);
-            // // this.file = this.$refs.file.files[0];
-            //   const formData = new FormData();
-            //  //
-            //   this.rows.forEach(row => {
-            //  //     // this.files.forEach(file => {
-            //  //     //     this.image.append('images[]', file, file.name);
-            //  //     //     });
-            //       formData.append(row.name, this.image)
-            //  //     //this.$set(this.images, row.name, '')
-            //   });
-            // const formData = new FormData();
-            // this.files.forEach(file => {
-            //     formData.append('images[]', file, file.name);
-            // });
 
-            axios.post('api/file', data)
-            //     .then(response => {
-            //         //console.log(response);
-            //     })
-            // console.log(c);
-            // console.log(this.form);
-            // this.form.post('api/file')
-            //     .then(() => {
-            //         // Fire.$emit('AfterCreate');
-            //         // $('#addNew').modal('hide');
-            //         // toast({
-            //         //     type: 'success',
-            //         //     title: 'File Created in successfully'
-            //         // })
-            //     })
-            .catch(function () {});
+            axios.post('api/file', data).then(function () {
+                Fire.$emit('AfterCreate');
+                $('#addNew').modal('hide');
+                toast({
+                    type: 'success',
+                    title: 'Form Created in successfully'
+                });
+            }).catch(function () {});
         }
     },
     created: function created() {
         var _this2 = this;
 
         this.loadDatas();
+
         Fire.$on('AfterCreate', function () {
             _this2.loadDatas();
         });
@@ -55551,7 +54886,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 52 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -55595,7 +54930,7 @@ var render = function() {
                             staticClass: "btn btn-success",
                             on: {
                               click: function($event) {
-                                _vm.viewModal(_vm.file)
+                                _vm.viewModal(form)
                               }
                             }
                           },
@@ -55642,8 +54977,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: !_vm.editmode,
-                        expression: "!editmode"
+                        value: !_vm.editMode,
+                        expression: "!editMode"
                       }
                     ],
                     staticClass: "modal-title",
@@ -55659,14 +54994,14 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.editmode,
-                        expression: "editmode"
+                        value: _vm.editMode,
+                        expression: "editMode"
                       }
                     ],
                     staticClass: "modal-title",
                     attrs: { id: "addNewLabel" }
                   },
-                  [_vm._v("View File Data")]
+                  [_vm._v("View Form Data")]
                 ),
                 _vm._v(" "),
                 _vm._m(1)
@@ -55679,56 +55014,67 @@ var render = function() {
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
-                      !_vm.editmode ? _vm.createData($event) : ""
+                      !_vm.editMode ? _vm.createData($event) : ""
                     }
                   }
                 },
                 [
                   _c("div", { staticClass: "modal-body" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Form Name")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.form_name,
+                            expression: "form.form_name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "form_name",
+                          placeholder: "Name"
+                        },
+                        domProps: { value: _vm.form.form_name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "form_name", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("label", [_vm._v("Form Name")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.form_name,
-                              expression: "form.form_name"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.form.errors.has("form_name")
-                          },
-                          attrs: {
-                            type: "text",
-                            name: "form_name",
-                            placeholder: "Name"
-                          },
-                          domProps: { value: _vm.form.form_name },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.form,
-                                "form_name",
-                                $event.target.value
-                              )
-                            }
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editMode,
+                            expression: "editMode"
                           }
-                        }),
-                        _vm._v(" "),
-                        _c("has-error", {
-                          attrs: { form: _vm.form, field: "form_name" }
-                        })
-                      ],
-                      1
+                        ],
+                        attrs: { id: "upload_files" }
+                      },
+                      _vm._l(_vm.files, function(item) {
+                        return _c("p", [
+                          _c("img", {
+                            attrs: {
+                              src: "images/uploads/" + item.file,
+                              title: item.file_name,
+                              width: "120",
+                              height: "120"
+                            }
+                          })
+                        ])
+                      })
                     ),
                     _vm._v(" "),
                     _c(
@@ -55738,15 +55084,23 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: !_vm.editmode,
-                            expression: "!editmode"
+                            value: !_vm.editMode,
+                            expression: "!editMode"
                           }
                         ],
-                        staticClass: "box-body box-self-evaluation"
+                        staticClass: "input-group input-group_table"
                       },
                       [
                         _c("table", { staticClass: "table" }, [
-                          _vm._m(2),
+                          _c("thead", [
+                            _vm.rows.length > 0
+                              ? _c("tr", [
+                                  _c("th", [_vm._v("File Name")]),
+                                  _vm._v(" "),
+                                  _c("th", [_vm._v("File")])
+                                ])
+                              : _vm._e()
+                          ]),
                           _vm._v(" "),
                           _c(
                             "tbody",
@@ -55833,8 +55187,8 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: !_vm.editmode,
-                            expression: "!editmode"
+                            value: !_vm.editMode,
+                            expression: "!editMode"
                           }
                         ],
                         staticClass: "form-group"
@@ -55875,8 +55229,8 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: !_vm.editmode,
-                            expression: "!editmode"
+                            value: !_vm.editMode,
+                            expression: "!editMode"
                           }
                         ],
                         staticClass: "btn btn-danger",
@@ -55892,8 +55246,8 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: !_vm.editmode,
-                            expression: "!editmode"
+                            value: !_vm.editMode,
+                            expression: "!editMode"
                           }
                         ],
                         staticClass: "btn btn-success",
@@ -55938,18 +55292,6 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("File Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("File")])
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -55962,7 +55304,7 @@ if (false) {
 }
 
 /***/ }),
-/* 53 */
+/* 50 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

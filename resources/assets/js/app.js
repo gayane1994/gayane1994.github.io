@@ -23,7 +23,7 @@ const toast = swal.mixin({
 });
 
 window.toast = toast;
-window.Form = Form;
+window.Form  = Form;
 
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
@@ -32,11 +32,10 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter);
 
-let routes = [
-  ];
+let routes = [];
 
 const router = new VueRouter({
-    mode: 'history',
+    mode : 'history',
     routes
   });
 
@@ -50,7 +49,6 @@ window.Fire =  new Vue();
 
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('users', require('./components/Users.vue'));
 Vue.component('files', require('./components/Files.vue'));
 
 

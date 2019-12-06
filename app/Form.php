@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Form extends Model
 {
     protected $fillable = [
-        'form_name', 'file_name', 'file'
+        'form_name', 'file'
     ];
 }
